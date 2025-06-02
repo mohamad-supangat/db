@@ -1,4 +1,4 @@
-import kodepos from "../controllers/kodepos";
+import { kodeposV1, kodeposV2 } from "../controllers/kodepos";
 import sekolah from "../controllers/sekolah";
 import { isEmpty, realEscapeString } from "../helpers";
 
@@ -7,8 +7,16 @@ export default function handler(req: Request) {
   let searchQuery: string = currentUrl.searchParams.get("q")?.toString() ?? "";
   searchQuery = realEscapeString(searchQuery)!;
 
-  if (!isEmpty(searchQuery) && currentUrl.pathname == "/kodepos/search") {
-    return kodepos(searchQuery);
+  if (
+    !isEmpty(searchQuery) &&
+    (currentUrl.pathname == "/v2/kodepos/search" ||
+      currentUrl.pathname == "/kodepos/search")
+  ) {
+    return kodeposV2(searchQuery);
+  }
+
+  if (!isEmpty(searchQuery) && currentUrl.pathname == "/v1/kodepos/search") {
+    return kodeposV1(searchQuery);
   }
 
   if (!isEmpty(searchQuery) && currentUrl.pathname == "/sekolah/search") {

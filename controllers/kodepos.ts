@@ -2,7 +2,7 @@ import { Database } from "bun:sqlite";
 
 export const db = new Database("kodepos.sqlite");
 
-export default function kodepos(searchQuery: string) {
+function getKodeposDB(searchQuery: string) {
   const rows = db
     .query(
       `
@@ -18,10 +18,32 @@ export default function kodepos(searchQuery: string) {
     )
     .all();
 
+  return rows;
+}
+
+export function kodeposV2(searchQuery: string) {
+  const rows = getKodeposDB(searchQuery);
   return Response.json(rows, {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET",
     },
   });
+}
+
+export function kodeposV1(searchQuery: string) {
+  const rows = getKodeposDB(searchQuery);
+  return Response.json(
+    {
+      statusCode: 200,
+      code: "OK",
+      data: rows,
+    },
+    {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+      },
+    },
+  );
 }
