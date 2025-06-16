@@ -4,7 +4,7 @@ import type { Sekolah } from "../../utils/types";
 import { db } from "../../controllers/sekolah";
 const baseUrl = "https://data.kemendikdasmen.go.id";
 const browser = await chromium.launch({
-  headless: true,
+  headless: false,
   args: ["--ozone-platform=wayland", "--enable-features=UseOzonePlatform"],
 });
 
@@ -39,7 +39,7 @@ function scrape(content: string) {
 
     if (Object.entries(result).length === keys.length) {
       if (Object.entries(result).length === keys.length) {
-        const { npsn, nama, bentuk, jenis, alamat, kelurahan, status } = result;
+        let { npsn, nama, bentuk, jenis, alamat, kelurahan, status } = result;
 
         // Ensure NPSN exists as it's likely the primary key
         if (npsn) {
