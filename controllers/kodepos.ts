@@ -1,24 +1,28 @@
 import { Database } from "bun:sqlite";
 
-export const db = new Database("kodepos.sqlite");
+export const db = new Database("nusa.sqlite");
 
 function getKodeposDB(searchQuery: string) {
-  const rows = db
-    .query(
-      `
-      SELECT *
-      FROM addresses
-      WHERE
-        province LIKE '%${searchQuery}%'
-        OR city LIKE '%${searchQuery}%'
-        OR subdistrict LIKE '%${searchQuery}%'
-        OR urban LIKE '%${searchQuery}%'
-        OR postalcode LIKE '%${searchQuery}%'
-      `,
-    )
-    .all();
+  const query = `
+    SELECT
+      v.name AS urban,
+      v.postal_code AS postalcode,
+      d.name AS subdistrict,
+      r.name AS city,
+      p.name AS province
+    FROM villages v
+    JOIN districts d ON v.district_code = d.code
+    JOIN regencies r ON v.regency_code = r.code
+    JOIN provinces p ON v.province_code = p.code
+    WHERE
+      p.name LIKE $search
+      OR r.name LIKE $search
+      OR d.name LIKE $search
+      OR v.name LIKE $search
+      OR v.postal_code LIKE $search
+  `;
 
-  return rows;
+  return db.query(query).all({ $search: `%${searchQuery}%` });
 }
 
 export function kodeposV2(searchQuery: string) {
