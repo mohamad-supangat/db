@@ -15,7 +15,7 @@ const handleSearch = (req: Request, handler: (query: string) => any) => {
   return Response.redirect("https://s.id/aurakomputer");
 };
 
-const server = serve({
+const server = Bun.serve({
   routes: {
     "/health": () => Response.json({ status: "ok" }),
     "/kodepos/search": (req) => handleSearch(req, kodeposV2),
