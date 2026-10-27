@@ -14,5 +14,7 @@
   "scripts": {
     "dev": "bun --watch server.ts"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@godsreveal/vercel-bun": "^0.2.7"
+  }
 }
