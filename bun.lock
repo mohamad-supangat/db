@@ -5,9 +5,9 @@
     "": {
       "name": "test-ap",
       "devDependencies": {
-        "@types/bun": "^1.4.4",
-        "cheerio": "^1.2.0",
-        "playwright": "^1.64.1",
+        "@types/bun": "latest",
+        "cheerio": "^1.0.0",
+        "playwright": "^1.52.0",
       },
       "peerDependencies": {
         "typescript": "^7.0.2",
