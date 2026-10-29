@@ -1,9 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "bunVersion": "1.4.x",
   "functions": {
-    "api/index.ts": {
-      "runtime": "@godsreveal/vercel-bun@0.2.7"
+    "**/*.ts": {
+      "includeFiles": "*.sqlite"
+    },
+    "**/*.mjs": {
+      "includeFiles": "*.sqlite"
     }
-  },
-  "rewrites": [{ "source": "/(.*)", "destination": "/api/index.ts" }]
+  }
 }
